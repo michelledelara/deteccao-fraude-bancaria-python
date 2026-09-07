@@ -396,6 +396,39 @@ Os limites reais dependeriam das políticas, controles e do apetite de risco da 
 
 ---
 
+## Estratégia experimental de classificação de risco
+
+O score produzido pelo modelo também é utilizado para segmentar as transações em faixas experimentais de risco.
+
+| Score do modelo | Nível | Tratamento sugerido |
+|---|---|---|
+| `< 0.20` | Baixo | Processamento normal |
+| `0.20 – 0.29` | Moderado | Monitoramento e regras adicionais |
+| `0.30 – 0.49` | Alto | Revisão ou autenticação adicional |
+| `>= 0.50` | Crítico | Priorização para investigação |
+
+> As faixas representam scores experimentais do modelo e não probabilidades calibradas de ocorrência de fraude.
+
+![Distribuição por nível de risco](reports/distribuicao_nivel_risco.png)
+
+### Governança da decisão
+
+A classificação por risco permite separar a decisão estatística da decisão operacional.
+
+Em vez de utilizar o modelo apenas para bloquear ou liberar uma transação, diferentes respostas podem ser associadas ao nível de risco observado.
+
+Essa abordagem permite considerar:
+
+- apetite de risco;
+- custo de investigação;
+- capacidade operacional;
+- impacto de falsos positivos;
+- impacto de falsos negativos;
+- necessidade de autenticação adicional;
+- priorização de casos para análise humana.
+
+---
+
 # Pipeline
 
 ```text
