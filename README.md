@@ -231,6 +231,79 @@ ajuda o algoritmo a considerar a diferença de frequência entre transações le
 
 # Análise dos resultados
 
+## Resultados do modelo
+
+O conjunto de teste utilizado nesta execução contém **3.000 transações**, sendo **83 fraudulentas**.
+
+Os resultados obtidos com o Random Forest utilizando threshold de decisão de `0.50` foram:
+
+| Indicador | Resultado |
+|---|---:|
+| Accuracy | **91,67%** |
+| Precision — Fraude | **8,46%** |
+| Recall — Fraude | **20,48%** |
+| F1-score — Fraude | **11,97%** |
+| ROC-AUC | **69,51%** |
+| Fraudes reais | **83** |
+| Fraudes detectadas | **17** |
+| Fraudes não detectadas | **66** |
+| Falsos positivos | **184** |
+
+### Matriz de confusão
+
+```text
+                Previsto
+                Legítima   Fraude
+
+Real Legítima      2733      184
+Real Fraude          66       17
+```
+
+### Interpretação
+
+A accuracy de **91,67%** não significa que o modelo apresenta bom desempenho na identificação de fraudes.
+
+O dataset é fortemente desbalanceado e a maior parte das observações pertence à classe legítima.
+
+O resultado mais relevante para o problema de negócio é o **recall da classe fraude**, que nesta execução foi de aproximadamente **20,48%**.
+
+Isso significa que, das 83 fraudes existentes no conjunto de teste, o modelo identificou corretamente apenas **17**, enquanto **66 operações fraudulentas não foram detectadas**.
+
+Ao mesmo tempo, foram gerados **184 falsos positivos**, isto é, transações legítimas classificadas como potencialmente fraudulentas.
+
+Esse resultado demonstra por que problemas de fraude não devem ser avaliados apenas por accuracy.
+
+### Perspectiva de risco
+
+Em um cenário financeiro, os dois tipos de erro possuem custos diferentes:
+
+**Falso negativo**
+
+Uma fraude real passa pelo sistema sem ser detectada.
+
+Possíveis consequências:
+
+- perda financeira;
+- chargeback;
+- exposição a fraude;
+- risco operacional;
+- risco reputacional.
+
+**Falso positivo**
+
+Uma operação legítima é sinalizada como fraude.
+
+Possíveis consequências:
+
+- bloqueio indevido;
+- necessidade de análise manual;
+- aumento do custo operacional;
+- atrito com o cliente.
+
+O modelo atual deve, portanto, ser interpretado como um **baseline experimental**, e não como um modelo pronto para produção.
+
+O próximo passo consiste em estudar diferentes thresholds e técnicas para melhorar principalmente o recall da classe fraude, sem elevar de forma excessiva os falsos positivos.
+
 ## Distribuição das classes
 
 Fraudes representam uma parcela menor das transações, característica típica de problemas reais de detecção de fraude.
