@@ -8,4 +8,4 @@ venv/
 *.joblib
 data/*.csv
 reports/*.csv
-reports/*.png
+
